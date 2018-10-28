@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+{% block body %}
+
+<a href="{% url 'view_flights' %}" class="btn btn-outline-success" role="button">View All Flights</a>
+
+<br> <br>
+
+
+<form class="form-inline my-2 my-lg-0" method="post" action="{% url 'view_available_flights'%}" role="form">
+{% csrf_token %}
+    <div class="form-group">
+    <input class="form-control mr-sm-2" placeholder="Source" name="source" type="text">
+    <input class="form-control mr-sm-2" placeholder="Destination" name="destination" type="text">
+    <button class="btn btn-secondary my-2 my-sm-0" type="submit" style="margin-right:10px;">View All Available Flights</button>
+    </div>
+</form>
+    {% if error_message %}
+        <p><strong>{{ error_message }}</strong></p>
+    {% endif %}
+    {% if flights %}
+    <table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Flight No.</th>
+      <th scope="col">Airline</th>
+      <th scope="col">No. of seats</th>
+      <th scope="col">Source</th>
+      <th scope="col">Destination</th>
+      <th scope="col">Departure Time</th>
+      <th scope="col">Arrival Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for flight in flights %}
+        <tr>
+          <td>{{flight.flight_no}}</td>
+          <td>{{flight.airline_name}}</td>
+          <td>{{ flight.no_of_seats }}</td>
+          <td>{{ flight.source}}</td>
+          <td>{{ flight.destination}}</td>
+          <td>{{ flight.departure_time}}</td>
+          <td>{{ flight.arrival_time}}</td>
+          <td>
+            {% if flight.no_of_seats > 0 %}
+                <a href="{% url 'book_flight' flight.pk%}" class="btn btn-outline-success" role="button">Book Now!</a>
+            {% else %}
+                <button type="button" class="btn btn-success disabled">Book Now!</button>
+            {% endif %}
+          </td>
+        </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endif %}
+<br>
+<form class="form-inline my-2 my-lg-0" method="post" action="{% url 'passenger_home' 1 %}" role="form">
+  {% csrf_token %}
+  <input class="form-control mr-sm-2" placeholder="Enter PNR" name="pnr" type="text">
+  <button class="btn btn-secondary my-2 my-sm-0" type="submit" style="margin-right:10px;">View My Booking</button>
+</form>
+{% endblock %}

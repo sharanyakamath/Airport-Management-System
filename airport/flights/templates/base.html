@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html5>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    {% load staticfiles %}
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.3/united/bootstrap.min.css" rel="stylesheet" integrity="sha384-+d4wMJSxEP3vzs2qZBElQRTZMXwgWH15Nyn2K/9XjKiHmh3sBuk1Un/IbcdMcYC4" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <a class="navbar-brand" href="{% url 'airport_mgmt' %}">Airport Management System</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarColor01">
+    {% with url_name=request.resolver_match.url_name %}
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item {% if url_name == 'home' %}active{% endif %}">
+        <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item {% if url_name == 'view_flights' %}active{% endif %}">
+        <a class="nav-link" href="{% url 'view_flights' %}">View Flights</a>
+      </li>
+      <li class="nav-item {% if url_name == 'security_login' %}active{% endif %}">
+        <a class="nav-link" href="{% url 'security_login' %}">Login as Security</a>
+      </li>
+      <li class="nav-item {% if url_name == 'staff_login' %}active{% endif %}">
+        <a class="nav-link" href="{% url 'staff_login' %}">Login as Staff</a>
+      </li>
+        {% if user.is_authenticated %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+      </li>
+        {% endif %}
+    </ul>
+    {% endwith %}
+    <!-- <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" placeholder="Search" type="text">
+      <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+    </form> -->
+  </div>
+</nav>
+<div style="margin-left:20px; margin-top:20px">
+{% block body %}{% endblock %}
+</div>
+
+<footer class="footer" style="margin-left:20px; margin-top:20px">
+  <small>
+    Module made by <a href="https://github.com/mehnazyunus">Mehnaz Yunus</a> and <a href="https://github.com/sharanyakamath">Sharanya Kamath</a>
+</small>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title %}Book Flight{% endblock %}
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+
+                        <form role="form" action="{% url 'book_flight' pk=flight_no %}" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                          <fieldset>
+                            <legend>Enter your details</legend>
+                            <div class="form-group">
+                              <label for="Name1">First Name</label>
+                              <input type="text" class="form-control" id="Name1" name="first_name" placeholder="Enter first name">
+                            </div>
+                            <div class="form-group">
+                              <label for="Name2">Last Name</label>
+                              <input type="text" class="form-control" id="Name2" name="last_name" placeholder="Enter last name">
+                            </div>
+                            <div class="form-group">
+                              <label for="gender">Gender &nbsp &nbsp</label>
+                              <input type="radio"  id="Name2" name="gender" value="M" checked> Male
+                              <input type="radio"  id="Name2" name="gender" value="F"> Female
+                            </div>
+                            <div class="form-group">
+                              <label for="dob">Date of Birth</label>
+                              <input type="date" class="form-control" id="Name2" name="dob" placeholder="Enter Date of Birth">
+                            </div>
+                            <div class="form-group">
+                              <label for="nationality">Nationality</label>
+                              <input type="text" class="form-control" id="nationality" name="nationality" placeholder="Enter nationality">
+                            </div>
+
+
+                            <button type="submit" class="btn btn-primary">Book</button>
+                          </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

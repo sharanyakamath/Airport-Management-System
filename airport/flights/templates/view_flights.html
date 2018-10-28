@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block title %}View Flights{% endblock %}
+{% block body %}
+
+<h3>Flights</h3>
+<div>
+<form class="form-inline my-2 my-lg-0" method="post" action="{% url 'search_by_source'%}" role="form">
+  {% csrf_token %}
+  <input class="form-control mr-sm-2" placeholder="Search by Source" name="source" type="text">
+  <button class="btn btn-secondary my-2 my-sm-0" type="submit" style="margin-right:10px;">Search</button>
+</form>
+<br>
+<form class="form-inline my-2 my-lg-0" method="post" action="{% url 'search_by_destination'%}" role="form">
+  {% csrf_token %}
+  <input class="form-control mr-sm-2" placeholder="Search by Destination" name="destination" type="text">
+  <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+</form>
+</div>
+
+<br>
+    <table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Flight No.</th>
+      <th scope="col">Airline</th>
+      <th scope="col">No. of seats</th>
+      <th scope="col">Source</th>
+      <th scope="col">Destination</th>
+      <th scope="col">Departure Time</th>
+      <th scope="col">Arrival Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for flight in flights %}
+        <tr>
+          <td>{{ flight.flight_no}}</td>
+          <td>{{ flight.airline_name}}</td>
+          <td>{{ flight.no_of_seats }}</td>
+          <td>({{ flight.source_code}}) {{ flight.source}}</td>
+          <td>({{ flight.destination_code}}) {{ flight.destination}}</td>
+          <td>{{ flight.departure_time}}</td>
+          <td>{{ flight.arrival_time}}</td>
+          <td>
+            {% if flight.no_of_seats > 0 %}
+                <a href="{% url 'book_flight' flight.pk%}" class="btn btn-outline-success" role="button">Book Now!</a>
+            {% else %}
+                <button type="button" class="btn btn-success disabled">Book Now!</button>	    
+            {% endif %}
+          </td>
+        </tr>
+    {% endfor %}
+  </tbody>
+</table> 
+
+{% endblock %}

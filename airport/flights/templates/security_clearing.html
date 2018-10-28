@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Security Clearing{% endblock %}
+{% block body %}
+    <h3>Security</h3>
+    <table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">PNR</th>
+      <th scope="col">Name</th>
+      <th scope="col">Flight No.</th>
+      <th scope="col">Cleared Security Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for passenger in passengers %}
+        <tr>
+          <td>{{ passenger.pnr}}</td>
+          <td>{{ passenger.first_name}} {{ passenger.last_name}}</td>
+          <td>{{ passenger.flight_no.flight_no }}</td>
+          <td>{{ passenger.cleared_security_status }}</td>
+          <td>
+            {% if passenger.cleared_security_status == 0 %}
+                <a href="{% url 'clearing_for_security' passenger.pk%}" class="btn btn-outline-success" role="button">Clear for security</a>
+            {% else %}
+                <button type="button" class="btn btn-success disabled">Clear for security</button>	    
+            {% endif %}
+          </td>
+        </tr>
+    {% endfor %}
+  </tbody>
+</table> 
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block title %}Airport Management System{% endblock %}
+{% block body %}
+
+<div class="jumbotron">
+  <h2 class="display-3">Airport Management System</h2>
+  <p class="lead">The system interfaces and integrates the majority of electronic information within the airport, assuring maximum flow of information for operations, management and security.</p>
+  <hr class="my-4">
+  <p>This system would be used by multiple users who would want access to different data for their day to day operations. This includes passengers as well as security personnel and flight staff.</p>
+  
+
+	<button type="button" class="btn btn-outline-primary">Security Personnel</button>
+  	<div class="panel">
+  		<br>
+  		<p>They can easily verify the names and information of the passengers travelling across a series of flight manifests.</p>
+  		<p>They can clear passengers for their flight.</p>
+	</div>
+	<br>
+	<button type="button" class="btn btn-outline-primary">Flight staff</button>
+  	<div class="panel">
+  		<br>
+  		<p>They can access information about passengers travelling in their respective flights.</p>
+  		<p>Before the flight, they generate a report of all checked in passengers who have cleared security. The report would contain details of number of passengers and their names.</p>
+	</div>
+	<br>
+	<button type="button" class="btn btn-outline-primary">Passengers</button>
+  	<div class="panel">
+  		<br>
+  		<p>They can use their unique PNR to access flight information and perform self check in.</p>
+  		<p>They can also search and book flights.</p>
+	</div>
+	<br>
+</div>
+
+<style>
+.panel {
+    padding: 0 18px;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+</style>
+
+<script>
+var acc = document.getElementsByClassName("btn btn-outline-primary");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    }
+  });
+}
+</script>
+{% endblock %}
