@@ -175,10 +175,12 @@ def staff_check_in(request, pk):
     return redirect('staff_home', flight_no=passenger.flight_no.flight_no)
 
 
-# def delete_passenger(request, pk):
-#     passenger = Passenger.objects.get(pk=pk)
-#     passenger.delete()
-#     return redirect('staff_generating_report', pk=passenger.pk)
+def delete_passengers(request, flight_no):
+    flight = Flight.objects.get(flight_no=flight_no)
+    passenger = Passenger.objects.filter(flight_no=flight)
+    passenger.delete()
+    return redirect('staff_home', flight_no=flight.flight_no)
+
 
 def generate_report(request, flight_no):
     passengers = Passenger.objects.filter(flight_no=flight_no)
