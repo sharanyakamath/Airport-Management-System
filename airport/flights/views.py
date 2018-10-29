@@ -39,7 +39,7 @@ def login_staff(request):
             if user.is_active:
                 if user.user_type == 1:
                     login(request, user)
-                    return redirect('staff_generating_report', pk=user.staff.id)
+                    return redirect('staff_home', pk=user.staff.id)
                 else:
                     return render(request, 'staff_login.html', {'error_message': 'Invalid flight staff credentials'})
             else:
@@ -70,10 +70,10 @@ def clear_for_security(request, pk):
     return redirect('security_clearing')
 
 
-def generate_report_staff(request,pk):
-    staffperson = get_object_or_404(Staff, pk=pk)
-    data = Passenger.objects.filter(flight_no=staffperson.flight_no)
-    return render(request, 'staff_generating_report.html', {'passengers': data})
+def staff_home(request,pk):
+    staff = get_object_or_404(Staff, pk=pk)
+    data = Passenger.objects.filter(flight_no=staff.flight_no)
+    return render(request, 'staff_home.html', {'passengers': data, 'flight_no': staff.flight_no.flight_no})
 
     
 def view_flights(request):
@@ -81,12 +81,11 @@ def view_flights(request):
     return render(request, 'view_flights.html', {'flights': data})
 
 
-def self_check_in(request,pk):
+def self_check_in(request, pk):
     passenger = get_object_or_404(Passenger, pk=pk)
     passenger.checked_in_status = True
     passenger.save()
-
-    return redirect('passenger_home', pnr=passenger.pnr)
+    return redirect('passenger_home', pk=passenger.pk)
 
 
 def search_by_source(request):
@@ -144,24 +143,47 @@ def book_flight(request, pk):
         passenger.pnr = str(flight.flight_no) + str(flight.destination_code) + str(passenger.pk)
         passenger.save()
         flight.no_of_seats -= 1
-        return redirect('passenger_home', pnr=passenger.pk)
+        flight.save()
+        return redirect('passenger_home', pk=passenger.pk)
     else:
         return render(request, 'book_flight.html', {'flight_no': pk})
 
 
-def passenger_home(request, pnr):
+def passenger_home(request, pk):
     if request.method == "POST":
-        pnr=request.POST['pnr']
+        pnr = request.POST['pnr']
         passenger = get_object_or_404(Passenger, pnr=pnr)
         return render(request, 'passenger_home.html', {'passenger': passenger})
-    else:    
-        passenger = get_object_or_404(Passenger, pk=pnr)
+    else:
+        passenger = get_object_or_404(Passenger, pk=pk)
         return render(request, 'passenger_home.html', {'passenger': passenger})
 
-def create_pdf(request,pnr):
-    passenger = get_object_or_404(Passenger, pnr=pnr)
+
+def create_pdf(request, pk):
+    passenger = get_object_or_404(Passenger, pk=pk)
     html = loader.render_to_string('passenger_home.html', {'passenger': passenger})
-    output= pdfkit.from_string(html, output_path=False)
+    output = pdfkit.from_string(html, output_path=False)
+    response = HttpResponse(content_type="application/pdf")
+    response.write(output)
+    return response
+
+
+def staff_check_in(request, pk):
+    passenger = get_object_or_404(Passenger, pk=pk)
+    passenger.checked_in_status = True
+    passenger.save()
+    return redirect('staff_home', pk=passenger.pk)
+
+
+# def delete_passenger(request, pk):
+#     passenger = Passenger.objects.get(pk=pk)
+#     passenger.delete()
+#     return redirect('staff_generating_report', pk=passenger.pk)
+
+def generate_report(request, flight_no):
+    passengers = Passenger.objects.filter(flight_no=flight_no)
+    html = loader.render_to_string('staff_home.html', {'passengers': passengers, 'flight_no': flight_no})
+    output = pdfkit.from_string(html, output_path=False)
     response = HttpResponse(content_type="application/pdf")
     response.write(output)
     return response
