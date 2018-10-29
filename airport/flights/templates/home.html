@@ -1,7 +1,11 @@
 {% extends 'base.html' %}
 {% block title %}Home{% endblock %}
 {% block body %}
+{%  include 'tellme/js_inc.html' %}
 
+<button type="button" id="feedback-btn" class="btn btn-info vertical-right-aligned">
+    Feedback <span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span>
+</button>
 <a href="{% url 'view_flights' %}" class="btn btn-outline-success" role="button">View All Flights</a>
 
 <br> <br>
