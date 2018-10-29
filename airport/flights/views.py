@@ -121,7 +121,7 @@ def view_available_flights(request):
             if flights:
                 return render(request, 'home.html', {'flights': flights})
             else:
-                return render(request, 'home.html', {'error_message': "No flights found"})
+                return render(request, 'home.html', {'error_message_flight': "No flights found"})
         else:
             return redirect('home')
     else:
@@ -150,12 +150,15 @@ def book_flight(request, pk):
 
 
 def passenger_home(request, pk):
-    if request.method == "POST":
+    if request.method == "POST":  # view existing booking
         pnr = request.POST['pnr']
-        passenger = get_object_or_404(Passenger, pnr=pnr)
-        return render(request, 'passenger_home.html', {'passenger': passenger})
-    else:
-        passenger = get_object_or_404(Passenger, pk=pk)
+        passenger = Passenger.objects.filter(pnr=pnr)
+        if passenger:
+            return render(request, 'passenger_home.html', {'passenger': passenger})
+        else:
+            return render(request, 'home.html', {'error_message_booking': 'No booking found'})
+    else:  # after booking a new ticket
+        passenger = Passenger.objects.get(pk=pk)
         return render(request, 'passenger_home.html', {'passenger': passenger})
 
 
