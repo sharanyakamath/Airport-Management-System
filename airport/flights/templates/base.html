@@ -19,6 +19,7 @@
   <div class="collapse navbar-collapse" id="navbarColor01">
     {% with url_name=request.resolver_match.url_name %}
     <ul class="navbar-nav mr-auto">
+      {% if not user.is_authenticated %}
       <li class="nav-item {% if url_name == 'home' %}active{% endif %}">
         <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
       </li>
@@ -31,7 +32,10 @@
       <li class="nav-item {% if url_name == 'staff_login' %}active{% endif %}">
         <a class="nav-link" href="{% url 'staff_login' %}">Login as Staff</a>
       </li>
-        {% if user.is_authenticated %}
+      {% endif %}
+
+      {% if user.is_authenticated %}
+
       <li class="nav-item">
         <a class="nav-link" href="{% url 'logout' %}">Logout</a>
       </li>
