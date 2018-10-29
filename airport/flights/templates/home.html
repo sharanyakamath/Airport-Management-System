@@ -19,8 +19,8 @@
     <button class="btn btn-secondary my-2 my-sm-0" type="submit" style="margin-right:10px;">View All Available Flights</button>
     </div>
 </form>
-    {% if error_message %}
-        <p><strong>{{ error_message }}</strong></p>
+    {% if error_message_flight %}
+        <p><strong>{{ error_message_flight }}</strong></p>
     {% endif %}
     {% if flights %}
     <table class="table table-hover">
@@ -63,5 +63,6 @@
   {% csrf_token %}
   <input class="form-control mr-sm-2" placeholder="Enter PNR" name="pnr" type="text">
   <button class="btn btn-secondary my-2 my-sm-0" type="submit" style="margin-right:10px;">View My Booking</button>
+    {% if error_message_booking %}<p><strong>{{ error_message_booking }}</strong></p>{% endif %}
 </form>
 {% endblock %}

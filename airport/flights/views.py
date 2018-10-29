@@ -121,7 +121,7 @@ def view_available_flights(request):
             if flights:
                 return render(request, 'home.html', {'flights': flights})
             else:
-                return render(request, 'home.html', {'error_message': "No flights found"})
+                return render(request, 'home.html', {'error_message_flight': "No flights found"})
         else:
             return redirect('home')
     else:
@@ -150,12 +150,15 @@ def book_flight(request, pk):
 
 
 def passenger_home(request, pk):
-    if request.method == "POST":
+    if request.method == "POST":  # view existing booking
         pnr = request.POST['pnr']
-        passenger = get_object_or_404(Passenger, pnr=pnr)
-        return render(request, 'passenger_home.html', {'passenger': passenger})
-    else:
-        passenger = get_object_or_404(Passenger, pk=pk)
+        passenger = Passenger.objects.filter(pnr=pnr)
+        if passenger:
+            return render(request, 'passenger_home.html', {'passenger': passenger})
+        else:
+            return render(request, 'home.html', {'error_message_booking': 'No booking found'})
+    else:  # after booking a new ticket
+        passenger = Passenger.objects.get(pk=pk)
         return render(request, 'passenger_home.html', {'passenger': passenger})
 
 
@@ -175,10 +178,12 @@ def staff_check_in(request, pk):
     return redirect('staff_home', flight_no=passenger.flight_no.flight_no)
 
 
-# def delete_passenger(request, pk):
-#     passenger = Passenger.objects.get(pk=pk)
-#     passenger.delete()
-#     return redirect('staff_generating_report', pk=passenger.pk)
+def delete_passengers(request, flight_no):
+    flight = Flight.objects.get(flight_no=flight_no)
+    passenger = Passenger.objects.filter(flight_no=flight)
+    passenger.delete()
+    return redirect('staff_home', flight_no=flight.flight_no)
+
 
 def generate_report(request, flight_no):
     passengers = Passenger.objects.filter(flight_no=flight_no)
