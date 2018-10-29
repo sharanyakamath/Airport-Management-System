@@ -39,7 +39,7 @@ def login_staff(request):
             if user.is_active:
                 if user.user_type == 1:
                     login(request, user)
-                    return redirect('staff_home', pk=user.staff.id)
+                    return redirect('staff_home', flight_no=user.staff.flight_no.flight_no)
                 else:
                     return render(request, 'staff_login.html', {'error_message': 'Invalid flight staff credentials'})
             else:
@@ -70,10 +70,10 @@ def clear_for_security(request, pk):
     return redirect('security_clearing')
 
 
-def staff_home(request,pk):
-    staff = get_object_or_404(Staff, pk=pk)
-    data = Passenger.objects.filter(flight_no=staff.flight_no)
-    return render(request, 'staff_home.html', {'passengers': data, 'flight_no': staff.flight_no.flight_no})
+def staff_home(request, flight_no):
+    # staff = get_object_or_404(Staff, pk=pk)
+    data = Passenger.objects.filter(flight_no=flight_no)
+    return render(request, 'staff_home.html', {'passengers': data, 'flight_no': flight_no})
 
     
 def view_flights(request):
@@ -172,7 +172,7 @@ def staff_check_in(request, pk):
     passenger = get_object_or_404(Passenger, pk=pk)
     passenger.checked_in_status = True
     passenger.save()
-    return redirect('staff_home', pk=passenger.pk)
+    return redirect('staff_home', flight_no=passenger.flight_no.flight_no)
 
 
 # def delete_passenger(request, pk):
