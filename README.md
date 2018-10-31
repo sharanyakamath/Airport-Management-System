@@ -21,6 +21,7 @@
 - `source myvenv/bin/activate`
 - `pip install django mysqlclient`
 - `pip install pdfkit`
+- `pip install django-tellme`
 
 ### Running the project
 
