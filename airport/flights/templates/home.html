@@ -2,16 +2,22 @@
 {% block title %}Home{% endblock %}
 {% block body %}
 
-<a href="{% url 'view_flights' %}" class="btn btn-outline-success" role="button">View All Flights</a>
-
-<br> <br>
-
-
 <form class="form-inline my-2 my-lg-0" method="post" action="{% url 'view_available_flights'%}" role="form">
 {% csrf_token %}
     <div class="form-group">
     <input class="form-control mr-sm-2" placeholder="Source" name="source" type="text">
     <input class="form-control mr-sm-2" placeholder="Destination" name="destination" type="text">
+{#    <div class='input-group date' id='datetimepicker3'>#}
+{#        <input type='text' class="form-control" />#}
+{#            <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>#}
+{#            <script type="text/javascript">#}
+{#                $(function () {#}
+{#                    $('#datetimepicker3').datetimepicker({#}
+{#                        format: 'LT'#}
+{#                    });#}
+{#                });#}
+{#            </script>#}
+{#    </div>#}
     <button class="btn btn-secondary my-2 my-sm-0" type="submit" style="margin-right:10px;">View All Available Flights</button>
     </div>
 </form>
@@ -61,4 +67,5 @@
   <button class="btn btn-secondary my-2 my-sm-0" type="submit" style="margin-right:10px;">View My Booking</button>
     {% if error_message_booking %}<p><strong>{{ error_message_booking }}</strong></p>{% endif %}
 </form>
+
 {% endblock %}

@@ -16,13 +16,13 @@ urlpatterns = [
     path('self_check_in/<int:pk>', views.self_check_in, name='self_check_in'),
     path('search_by_source', views.search_by_source, name='search_by_source'),
     path('search_by_destination', views.search_by_destination, name='search_by_destination'),
-    path('staff_home/<int:flight_no>', views.staff_home, name='staff_home'),
+    path('staff_home/<int:pk>', views.staff_home, name='staff_home'),
     path('view_available_flights/', views.view_available_flights, name='view_available_flights'),
     path('book_flight/<int:pk>', views.book_flight, name='book_flight'),
     path('passenger_home/<int:pk>', views.passenger_home, name='passenger_home'),
     path('create_pdf/<int:pk>', views.create_pdf, name='create_pdf'),
-    path('staff_check_in/<int:pk>', views.staff_check_in, name='staff_check_in'),
-    path('generate_report/<int:flight_no>', views.generate_report, name='generate_report'),
-    path('delete_passenger/<int:flight_no>', views.delete_passengers, name='delete_passengers')
+    path('staff_check_in/<int:staff_pk>/<int:passenger_pk>', views.staff_check_in, name='staff_check_in'),
+    path('generate_report/<int:staff_pk>', views.generate_report, name='generate_report'),
+    path('delete_passenger/<int:pk>', views.delete_passengers, name='delete_passengers')
 
 ]

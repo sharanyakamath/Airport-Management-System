@@ -1,22 +1,27 @@
 {% extends 'base.html' %}
 {% block title %}Passenger Home{% endblock %}
 {% block body %}
-    <div class="card border-primary mb-3" style="max-width: 20rem;">
-      <div class="card-header">Passenger Details of PNR: {{ passenger.pnr }}</div>
-          <div class="card-body">
-            <h6 class="card-title"><b>Name:</b> {{ passenger.first_name }} {{ passenger.last_name }}</h6>
-              <h6><b>Airline:</b> {{ passenger.flight_no.airline_name }}</h6>
-              <h6><b>Departure:</b> {{ passenger.flight_no.departure_time }}</h6>
-              <h6><b>Arrival:</b> {{ passenger.flight_no.arrival_time }}</h6>
-              <h6><b>From:</b> {{ passenger.flight_no.source }}</h6>
-              <h6><b>To:</b> {{ passenger.flight_no.destination }}</h6>
-          </div>
+    <div class="container">
+        <div class="row">
+            <div class="offset-sm-3">
+                <div class="card border-primary mb-3" style="max-width: 20rem;">
+                  <div class="card-header">Passenger Details of PNR: {{ passenger.pnr }}</div>
+                      <div class="card-body">
+                        <h6 class="card-title"><b>Name:</b> {{ passenger.first_name }} {{ passenger.last_name }}</h6>
+                          <h6><b>Airline:</b> {{ passenger.flight_no.airline_name }}</h6>
+                          <h6><b>Departure:</b> {{ passenger.flight_no.departure_time }}</h6>
+                          <h6><b>Arrival:</b> {{ passenger.flight_no.arrival_time }}</h6>
+                          <h6><b>From:</b> {{ passenger.flight_no.source }}</h6>
+                          <h6><b>To:</b> {{ passenger.flight_no.destination }}</h6>
+                      </div>
+                </div>
+                {% if passenger.checked_in_status == False %}
+                  <a href="{% url 'self_check_in' passenger.pk %}" class="btn btn-outline-success" role="button">Perform Self Check-In</a>
+                {% else %}
+                  <a href="#" class="btn btn-outline-success disabled" role="button">Checked In</a>
+                {% endif %}
+                <a href="{% url 'create_pdf' passenger.pk %}" class="btn btn-outline-success" role="button">Download Ticket</a>
+            </div>
+        </div>
     </div>
-    {% if passenger.checked_in_status == False %}
-      <a href="{% url 'self_check_in' passenger.pk %}" class="btn btn-outline-success" role="button">Perform Self Check-In</a>
-    {% else %}
-      <a href="#" class="btn btn-outline-success disabled" role="button">Checked In</a>
-    {% endif %}
-
-    <a href="{% url 'create_pdf' passenger.pk %}" class="btn btn-outline-success" role="button">Download Ticket</a>
 {% endblock %}
