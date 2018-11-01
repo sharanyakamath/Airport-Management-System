@@ -1,6 +1,15 @@
 {% extends 'base.html' %}
 {% block title %}Home{% endblock %}
 {% block body %}
+{%  include 'tellme/js_inc.html' %}
+
+
+<button type="button" id="feedback-btn" class="btn btn-info vertical-right-aligned">
+    Feedback <span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span>
+</button>
+
+<br> <br>
+
 
 <form class="form-inline my-2 my-lg-0" method="post" action="{% url 'view_available_flights'%}" role="form">
 {% csrf_token %}

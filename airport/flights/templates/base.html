@@ -7,6 +7,8 @@
     {% load staticfiles %}
     <link href="https://bootswatch.com/4/united/bootstrap.min.css" rel="stylesheet" >
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css"/>
+    <link href="https://bootswatch.com/4/united/bootstrap.min.css" rel="stylesheet" >
+    <link href="{% static 'tellme/feedback.min.css' %}" rel="stylesheet">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -31,6 +33,7 @@
   <div class="collapse navbar-collapse" id="navbarColor01">
     {% with url_name=request.resolver_match.url_name %}
     <ul class="navbar-nav mr-auto">
+      {% if not user.is_authenticated %}
       <li class="nav-item {% if url_name == 'home' %}active{% endif %}">
         <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
       </li>
@@ -43,7 +46,10 @@
       <li class="nav-item {% if url_name == 'staff_login' %}active{% endif %}">
         <a class="nav-link" href="{% url 'staff_login' %}">Login as Staff</a>
       </li>
-        {% if user.is_authenticated %}
+      {% endif %}
+
+      {% if user.is_authenticated %}
+
       <li class="nav-item">
         <a class="nav-link" href="{% url 'logout' %}">Logout</a>
       </li>
