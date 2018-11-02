@@ -59,7 +59,7 @@ def airport_mgmt(request):
 
 def clear_security(request):
     data = Passenger.objects.all()
-    return render(request, 'security_clearing.html', {'passengers': data})
+    return render(request, 'security_clearing.html', {'passengers': data}, {'user': request.user})
 
 
 def clear_for_security(request, pk):
