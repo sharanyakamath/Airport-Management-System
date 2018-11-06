@@ -22,6 +22,7 @@
 - `pip install django mysqlclient`
 - `pip install pdfkit`
 - `pip install django-tellme`
+- `pip install Pillow`
 
 ### Running the project
 
