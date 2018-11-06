@@ -12,8 +12,6 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 
-
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -31,7 +29,7 @@ ALLOWED_HOSTS = []
 
 AUTH_USER_MODEL = 'flights.User'
 
-TELLME_FEEDBACK_EMAIL = 'admin@tellme.com'
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -42,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'tellme',
 
 ]
 
