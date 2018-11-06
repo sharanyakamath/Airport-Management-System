@@ -154,7 +154,7 @@ def passenger_home(request, pk):
         pnr = request.POST['pnr']
         passenger = Passenger.objects.filter(pnr=pnr)
         if passenger:
-            get_object_or_404(Passenger, pnr=pnr)
+            passenger = get_object_or_404(Passenger, pnr=pnr)
             return render(request, 'passenger_home.html', {'passenger': passenger})
         else:
             return render(request, 'home.html', {'error_message_booking': 'No booking found'})
