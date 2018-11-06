@@ -162,6 +162,7 @@ def view_booking(request):
         except Passenger.DoesNotExist:
             passenger = None
         if passenger:
+            passenger = get_object_or_404(Passenger, pnr=pnr)
             return render(request, 'passenger_home.html', {'passenger': passenger})
         else:
             return render(request, 'home.html', {'error_message_booking': 'No booking found'})
