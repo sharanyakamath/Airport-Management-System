@@ -2,18 +2,6 @@
 {% block title %}Staff Report Generation{% endblock %}
 {% block body %}
     <h3>Staff</h3>
-    <div class="container">
-        <div class="row">
-            <div class="card border-primary mb-3" style="max-width: 20rem;">
-              <div class="card-header">Staff Details</div>
-                  <div class="card-body">
-                    <h6 class="card-title"><b>Name:</b> {{ staff.user.first_name }} {{ staff.user.last_name }}</h6>
-                      <h6 class="card-title"><b>ID:</b> {{ staff.id }}</h6>
-                      <h6 class="card-title"><b>Flight No:</b> {{ staff.flight_no.flight_no }}</h6>
-                  </div>
-            </div>
-        </div>
-    </div>
     <table class="table table-hover">
   <thead>
     <tr>
@@ -38,7 +26,7 @@
           <td>{{ passenger.gender}}</td>
           <td>
             {% if passenger.checked_in_status == 0 %}
-                <a href="{% url 'staff_check_in' staff_pk=staff.pk passenger_pk=passenger.pk%}" class="btn btn-outline-danger" role="button">Check In</a>
+                <a href="{% url 'staff_check_in' passenger.pk%}" class="btn btn-outline-danger" role="button">Check In</a>
             {% else %}
                 <button type="button" class="btn btn-success disabled">Checked In</button>
             {% endif %}
@@ -48,7 +36,7 @@
     {% endfor %}
   </tbody>
 </table>
-<a href="{% url 'generate_report' staff.pk %}" class="btn btn-outline-success" role="button">Generate Flight Report</a>
+<a href="{% url 'generate_report' flight_no %}" class="btn btn-outline-success" role="button">Generate Flight Report</a>
   <!-- Trigger the modal with a button -->
   <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal">CLEAR FLIGHT FOR TAKE OFF</button>
 
@@ -67,7 +55,8 @@
 		    <p>Are you sure you want to clear flight for take off?</p>
 	      </div>
 	      <div class="modal-footer">
-            <a href="{% url 'delete_passengers' staff.pk %}" class="btn btn-danger" role="button">Yes, clear</a>
+            <a href="{% url 'delete_passengers' flight_no %}" class="btn btn-danger" role="button">Yes, clear</a>
+{#		    <button type="button" class="btn btn-danger">Yes, clear</button>#}
 		    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 	      </div>
 	    </div>
