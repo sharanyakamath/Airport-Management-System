@@ -2,11 +2,6 @@
 {% block title %}Home{% endblock %}
 {% block body %}
 
-<a href="{% url 'view_flights' %}" class="btn btn-outline-success" role="button">View All Flights</a>
-
-<br> <br>
-
-
 <form class="form-inline my-2 my-lg-0" method="post" action="{% url 'view_available_flights'%}" role="form">
 {% csrf_token %}
     <div class="form-group">
@@ -55,7 +50,7 @@
 
 {% endif %}
 <br>
-<form class="form-inline my-2 my-lg-0" method="post" action="{% url 'passenger_home' 1 %}" role="form">
+<form class="form-inline my-2 my-lg-0" method="post" action="{% url 'view_booking' %}" role="form">
   {% csrf_token %}
   <input class="form-control mr-sm-2" placeholder="Enter PNR" name="pnr" type="text">
   <button class="btn btn-secondary my-2 my-sm-0" type="submit" style="margin-right:10px;">View My Booking</button>

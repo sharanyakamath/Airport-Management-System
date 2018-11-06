@@ -150,16 +150,21 @@ def book_flight(request, pk):
 
 
 def passenger_home(request, pk):
+    passenger = Passenger.objects.get(pk=pk)
+    return render(request, 'passenger_home.html', {'passenger': passenger})
+
+
+def view_booking(request):
     if request.method == "POST":  # view existing booking
         pnr = request.POST['pnr']
-        passenger = get_object_or_404(Passenger, pnr=pnr)
+        try:
+            passenger = Passenger.objects.get(pnr=pnr)
+        except Passenger.DoesNotExist:
+            passenger = None
         if passenger:
             return render(request, 'passenger_home.html', {'passenger': passenger})
         else:
             return render(request, 'home.html', {'error_message_booking': 'No booking found'})
-    else:  # after booking a new ticket
-        passenger = Passenger.objects.get(pk=pk)
-        return render(request, 'passenger_home.html', {'passenger': passenger})
 
 
 def create_pdf(request, pk):
